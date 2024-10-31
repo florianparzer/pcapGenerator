@@ -172,8 +172,8 @@ class PcapGenerator:
     JSON Example
         { 'Messages' : [{
                     'timestamp' : 10100,    # in milliseconds
-                    'srcIP' : '10.207.10.10',
-                    'dstIP' : '10.207.10.40',
+                    'srcIP' : '192.168.1.1',
+                    'dstIP' : '192.168.1.2',
                     'protocol' : 'udp'
                     'srcPort' : 40123,
                     'dstPort' : 5060,
@@ -181,8 +181,8 @@ class PcapGenerator:
                     },
                     {
                     'timestamp' : 10200,
-                    'srcIP' : '10.207.10.40',
-                    'dstIP' : '10.207.10.10',
+                    'srcIP' : '192.168.1.1',
+                    'dstIP' : '192.168.1.3',
                     'protocol' : 'tcp'
                     'srcPort' : 5060,
                     'dstPort' : 40123,

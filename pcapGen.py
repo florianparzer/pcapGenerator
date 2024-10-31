@@ -25,13 +25,12 @@ if __name__ == '__main__':
     # parser.add_argument('-v', '--verbose', help='Verbose logging of what the program does') TODO Verbose logging
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
     arguments = parser.parse_args()
-    print(arguments)
     if (arguments.isJson):
         pcapGen = PcapGenerator(arguments.inFile, arguments.pcapFile)
         pcapGen.createPcap()
     else:
         #TODO Format check for IP
-        #TODO Tempfile for json
+        #TODO Tempfile for json http://docs.python.org/library/tempfile.html
         jsonFile = tempfile.NamedTemporaryFile()
         reader = SiplpReader(arguments.inFile, jsonFile.name, arguments.localIP)
         reader.writeJsonFile()
