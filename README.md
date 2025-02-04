@@ -48,5 +48,9 @@ Example for a source file in json is down below:
 The payload is bas64 encoded. At the end of a sip message line is \r\n and there must not be a space before that.
 Between sip message header and sip message body are \r\n\r\n. If no body is present the message header still ends with these characters
 ```
+## Prerequisite
+This script needs python3 installed. Furthermore it uses the python package scapy https://scapy.net/. Therefore scapy needs to be installed in order to run this script
+
+
 ## Author
 Florian Parzer
