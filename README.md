@@ -3,7 +3,11 @@
 This program generates pcap Files from a source File that contains SIP messages.
 The source file can either be a json file or a siplp trace that was formatted with sipgrep. 
 
-Help Page:
+## Dependencies
+This program uses the scapy module to write the pcap files. It is therefore needed to install the module beforehand 
+with the command `pip install scapy`
+
+## Help Page
 ```bash
 usage: pcapGen [-h] [-o [PCAPFILE]] [-j | --json | --no-json] [--version]
                inFile [localIP]
