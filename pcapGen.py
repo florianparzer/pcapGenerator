@@ -30,12 +30,12 @@ if __name__ == '__main__':
         pcapGen.createPcap()
     else:
         #TODO Format check for IP
-        #TODO Tempfile for json http://docs.python.org/library/tempfile.html
-        jsonFile = tempfile.NamedTemporaryFile()
-        reader = SiplpReader(arguments.inFile, jsonFile.name, arguments.localIP)
-        reader.writeJsonFile()
-        pcapGen = PcapGenerator(jsonFile.name, arguments.pcapFile)
-        pcapGen.createPcap()
-        jsonFile.close()
+        #Use a tempfile for json data.
+        #tempfile created with python module tempfile. Doc: http://docs.python.org/library/tempfile.html
+        with tempfile.NamedTemporaryFile() as jsonFile:
+            reader = SiplpReader(arguments.inFile, jsonFile, arguments.localIP)
+            reader.writeJsonFile()
+            pcapGen = PcapGenerator(jsonFile, arguments.pcapFile)
+            pcapGen.createPcap()
 
 

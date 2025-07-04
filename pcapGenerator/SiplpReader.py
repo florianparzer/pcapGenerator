@@ -2,6 +2,7 @@ import base64
 import json
 import re
 from datetime import datetime
+import tempfile
 
 
 class SiplpReader:
@@ -17,10 +18,10 @@ class SiplpReader:
             The Lim IP Address of the LIM on which the trace was generated.
     '''
     __siplpFile = ''
-    __jsonFile = ''
+    __jsonFile = None
     __limIP = ''
 
-    def __init__(self, filePath:str, jsonFile:str, limIP:str = '127.0.0.1') -> None:
+    def __init__(self, filePath:str, jsonFile, limIP:str = '127.0.0.1') -> None:
         super().__init__()
         self.__siplpFile, self.__jsonFile, self.__limIP = filePath, jsonFile, limIP
 
@@ -116,14 +117,13 @@ class SiplpReader:
         '''
         parentObj = {'messages': []}
 
-        with open(self.__jsonFile, 'a') as file:
-            serializedParentObj = json.dumps(parentObj)
-            file.write(f'{serializedParentObj[: serializedParentObj.index("[")]}[\n')
-            isFirstObject = True
-            for jsonObjects in self.generateJson():
-                if not isFirstObject:
-                    file.write(',\n')
-                else:
-                    isFirstObject = False
-                json.dump(jsonObjects, file, indent=6)
-            file.write(f'{serializedParentObj[serializedParentObj.index("]"):]}\n')
+        serializedParentObj = json.dumps(parentObj)
+        self.__jsonFile.write(f'{serializedParentObj[: serializedParentObj.index("[")]}[\n'.encode('UTF-8'))
+        isFirstObject = True
+        for jsonObjects in self.generateJson():
+            if not isFirstObject:
+                self.__jsonFile.write(',\n'.encode('UTF-8'))
+            else:
+                isFirstObject = False
+            self.__jsonFile.write(json.dumps(jsonObjects, indent=6).encode('UTF-8'))
+        self.__jsonFile.write(f'{serializedParentObj[serializedParentObj.index("]"):]}\n'.encode('UTF-8'))

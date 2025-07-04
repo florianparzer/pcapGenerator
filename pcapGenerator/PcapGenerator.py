@@ -193,10 +193,10 @@ class PcapGenerator:
         Between sip message header and sip message body are \r\n\r\n. If no body is present the message header still ends with these characters
     '''
     __tcpConnections = {}
-    __jsonFile = ""
+    __jsonFile = None
     __pcapFile = ""
 
-    def __init__(self, jsonFile: str, pcapFile: str) -> None:
+    def __init__(self, jsonFile, pcapFile: str) -> None:
         super().__init__()
         self.__pcapFile = pcapFile
         self.__jsonFile = jsonFile
@@ -209,10 +209,9 @@ class PcapGenerator:
         :param pcapFile: The destination pcap file in which the messages are written
         :return: None
         '''
-        data = None
-        with open(self.__jsonFile) as file:
-            data = json.load(file)
-        messages = data['messages']
+        self.__jsonFile.seek(0)
+        jsonMessage = json.loads(self.__jsonFile.read().decode('UTF-8'))
+        messages = jsonMessage['messages']
         pcap = PcapWriter(self.__pcapFile, append=True, sync=False)
         for message in messages:
             if message['protocol'].lower() == 'tcp':
